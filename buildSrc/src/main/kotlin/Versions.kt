@@ -5,4 +5,5 @@ object Versions {
     const val JUNIT = "4.13.2"
     const val ANDROID_JUNIT = "1.1.4"
     const val ESPRESSO = "3.5.0"
+    const val CODE_QUALITY_TOOLS = "0.22.0"
 }

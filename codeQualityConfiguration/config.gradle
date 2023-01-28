@@ -1,0 +1,20 @@
+codeQualityTools {
+    ktlint {
+        toolVersion = '0.47.1'
+    }
+    detekt {
+        toolVersion = '1.0.0'
+    }
+    pmd {
+        enabled = false
+    }
+    checkstyle {
+        enabled = false
+    }
+    cpd {
+        enabled = false
+    }
+    kotlin {
+        allWarningsAsErrors = true
+    }
+}

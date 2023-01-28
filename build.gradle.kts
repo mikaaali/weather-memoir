@@ -1,6 +1,14 @@
 buildscript {
-
+    dependencies {
+        classpath(Dependencies.CODE_QUALITY)
+    }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+apply(
+    plugin = "com.vanniktech.code.quality.tools",
+    from = "${rootDir.path}/codeQualityConfiguration/config.gradle"
+)
+
 plugins {
     id("com.android.application") version "7.2.1" apply false
     id("com.android.library") version "7.2.1" apply false
