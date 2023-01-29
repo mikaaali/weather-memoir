@@ -1,4 +1,4 @@
-package com.example.weathermemoir.ui.theme
+package com.mikali.weathermemoir.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

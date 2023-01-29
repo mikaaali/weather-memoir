@@ -1,4 +1,4 @@
-package com.example.weathermemoir
+package com.mikali.weathermemoir
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

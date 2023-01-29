@@ -7,7 +7,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.example.weathermemoir"
+        applicationId = "com.mikali.weathermemoir"
         minSdk = 23
         targetSdk = 32
         versionCode = 1
