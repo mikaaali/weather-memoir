@@ -52,6 +52,7 @@ dependencies {
     implementation(Dependencies.COMPOSE_TOOLING_PREVIEW)
     implementation(Dependencies.LIFECYCLE_RUNTIME)
     implementation(Dependencies.ACTIVITY_COMPOSE)
+    implementation(Dependencies.NAVIGATION_COMPOSE)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO_CORE)

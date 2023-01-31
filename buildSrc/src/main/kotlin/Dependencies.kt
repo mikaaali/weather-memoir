@@ -27,4 +27,7 @@ object Dependencies {
     /* 3rd party code quality library that allow us to auto format kotlin and other usages.
     Main usage here is ktlint and ktlintFormat */
     const val CODE_QUALITY= "com.vanniktech:gradle-code-quality-tools-plugin:${Versions.CODE_QUALITY_TOOLS}"
+
+    //Jetpack navigation component for compose
+    const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
 }
