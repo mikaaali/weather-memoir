@@ -30,4 +30,8 @@ object Dependencies {
 
     //Jetpack navigation component for compose
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
+
+    // Import the Firebase BoM + all the other firebase libs that's used in this app
+    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
+    const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
 }

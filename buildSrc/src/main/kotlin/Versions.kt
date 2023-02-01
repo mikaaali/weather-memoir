@@ -7,4 +7,5 @@ object Versions {
     const val ESPRESSO = "3.5.0"
     const val CODE_QUALITY_TOOLS = "0.22.0"
     const val COMPOSE_NAVIGATION = "2.5.3"
+    const val FIREBASE_BOM = "28.4.1"
 }

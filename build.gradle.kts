@@ -1,6 +1,8 @@
 buildscript {
     dependencies {
         classpath(Dependencies.CODE_QUALITY)
+        // this is the plugin that parse the google-services.json file we added for firebase
+        classpath("com.google.gms:google-services:4.3.10")
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 

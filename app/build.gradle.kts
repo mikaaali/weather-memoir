@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -53,6 +55,8 @@ dependencies {
     implementation(Dependencies.LIFECYCLE_RUNTIME)
     implementation(Dependencies.ACTIVITY_COMPOSE)
     implementation(Dependencies.NAVIGATION_COMPOSE)
+    implementation(platform(Dependencies.FIREBASE_BOM))
+    implementation(Dependencies.FIREBASE_ANALYTICS)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO_CORE)

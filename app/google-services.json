@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389701424505",
+    "project_id": "weathermemoir",
+    "storage_bucket": "weathermemoir.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389701424505:android:37cde176cd77c0f1c8cba8",
+        "android_client_info": {
+          "package_name": "com.mikali.weathermemoir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389701424505-o8d5aen30htbma1q0mahcv7vetif21tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApC1qIbtVyXB9vY9CL7rWUKTQbwCOQXmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389701424505-o8d5aen30htbma1q0mahcv7vetif21tj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
