@@ -20,27 +20,23 @@ fun Navigation() {
         navController = navController,
         startDestination = NavigationScreens.SPLASH.name
     ) {
-        composable(
-            route = NavigationScreens.SPLASH.name
-        ) {
-            SplashScreen(
-                navController = navController
-            )
-            LoginScreen(
-                navController = navController
-            )
-            SignupScreen(
-                navController = navController
-            )
-            MainScreen(
-                navController = navController
-            )
-            QuestionnaireScreen(
-                navController = navController
-            )
-            MemoirListScreen(
-                navController = navController
-            )
+        composable(route = NavigationScreens.SPLASH.name) {
+            SplashScreen(navController = navController)
+        }
+        composable(route = NavigationScreens.LOGIN.name) {
+            LoginScreen(navController = navController)
+        }
+        composable(route = NavigationScreens.SIGNUP.name) {
+            SignupScreen(navController = navController)
+        }
+        composable(route = NavigationScreens.MAIN.name) {
+            MainScreen(navController = navController)
+        }
+        composable(route = NavigationScreens.QUESTIONNAIRE.name) {
+            QuestionnaireScreen(navController = navController)
+        }
+        composable(route = NavigationScreens.MEMOIR_LIST.name) {
+            MemoirListScreen(navController = navController)
         }
     }
 }
