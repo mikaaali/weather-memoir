@@ -57,6 +57,8 @@ dependencies {
     implementation(Dependencies.NAVIGATION_COMPOSE)
     implementation(platform(Dependencies.FIREBASE_BOM))
     implementation(Dependencies.FIREBASE_ANALYTICS)
+    implementation(Dependencies.FIREBASE_AUTHENTICATION)
+    implementation(Dependencies.FIREBASE_CLOUD_FIRESTORE)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO_CORE)
