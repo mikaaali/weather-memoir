@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mikali.weathermemoir.R
+import com.mikali.weathermemoir.navigation.NavigationScreens
 import com.mikali.weathermemoir.view.theme.Cyan
 import com.mikali.weathermemoir.view.theme.Green
 import com.mikali.weathermemoir.view.theme.LightGreen
@@ -51,6 +52,9 @@ fun SplashScreen(
                 )
             )
             delay(1500)
+            navController.navigate(
+                route = NavigationScreens.LOGIN.name
+            )
         }
     )
 
