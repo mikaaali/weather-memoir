@@ -36,4 +36,18 @@ object Dependencies {
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
     const val FIREBASE_AUTHENTICATION = "com.google.firebase:firebase-auth-ktx"
     const val FIREBASE_CLOUD_FIRESTORE =  "com.google.firebase:firebase-firestore-ktx"
+
+    //Koin is a dependency injection framework for kotlin
+    const val KOIN_CORE = "io.insert-koin:koin-core:${Versions.KOIN}"
+
+    const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
+    const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
+
+    //Moshi
+    const val MOSHI = "com.squareup.moshi:moshi:${Versions.MOSHI}"
+    const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
+
+    //Retrofit
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
+    const val RETROFIT_CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
 }

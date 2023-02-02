@@ -8,4 +8,8 @@ object Versions {
     const val CODE_QUALITY_TOOLS = "0.22.0"
     const val COMPOSE_NAVIGATION = "2.5.3"
     const val FIREBASE_BOM = "28.4.1"
+    const val KOIN = "3.2.0"
+    const val OKHTTP = "5.0.0-alpha.2"
+    const val MOSHI = "1.8.0"
+    const val RETROFIT = "2.9.0"
 }
