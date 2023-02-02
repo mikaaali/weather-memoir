@@ -60,6 +60,7 @@ dependencies {
     implementation(Dependencies.FIREBASE_AUTHENTICATION)
     implementation(Dependencies.FIREBASE_CLOUD_FIRESTORE)
     implementation(Dependencies.KOIN_CORE)
+    implementation(Dependencies.KOIN_ANDROID)
     implementation(Dependencies.OKHTTP_LOGGING)
     implementation(Dependencies.OKHTTP)
     // TODO WM-1: `com.squareup.moshi:moshi-kotlin:1.14.0` depends on a different kotlin reflect than the project, hence we have to explicitly specify the version
