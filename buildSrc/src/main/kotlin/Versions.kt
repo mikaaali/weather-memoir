@@ -12,4 +12,6 @@ object Versions {
     const val OKHTTP = "5.0.0-alpha.2"
     const val MOSHI = "1.8.0"
     const val RETROFIT = "2.9.0"
+    const val RX_KOTLIN = "2.2.0"
+    const val RX_ANDROID = "2.1.0"
 }

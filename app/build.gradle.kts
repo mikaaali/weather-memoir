@@ -68,6 +68,8 @@ dependencies {
     implementation(Dependencies.MOSHI_KOTLIN)
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_CONVERTER_MOSHI)
+    implementation(Dependencies.RX_KOTLIN)
+    implementation(Dependencies.RX_ANDROID)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO_CORE)
