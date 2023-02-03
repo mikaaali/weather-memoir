@@ -39,9 +39,10 @@ object Dependencies {
 
     //Koin is a dependency injection framework for kotlin
     const val KOIN_CORE = "io.insert-koin:koin-core:${Versions.KOIN}"
-    const val KOIN_ANDROID= "io.insert-koin:koin-android:${Versions.KOIN}"
+    const val KOIN_ANDROID = "io.insert-koin:koin-android:${Versions.KOIN}"
     const val KOIN_TEST = "io.insert-koin:koin-test:${Versions.KOIN}"
 
+    //OkHttp
     const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
     const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
 
