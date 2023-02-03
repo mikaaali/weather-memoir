@@ -73,6 +73,7 @@ dependencies {
     implementation(Dependencies.RX_KOTLIN)
     implementation(Dependencies.RX_ANDROID)
     testImplementation(Dependencies.JUNIT)
+    testImplementation(Dependencies.KOIN_TEST)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO_CORE)
     androidTestImplementation(Dependencies.COMPOSE_UI_TESTING)
