@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 // koin dependency injection module for network stuff
@@ -47,6 +48,7 @@ val networkModule = module {
         Retrofit.Builder()
             .baseUrl(get<String>(named("BASE_URL")))
             .addConverterFactory(MoshiConverterFactory.create(get()))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // call adapter for io.reactivex.Observable
             .client(get())
             .build()
     }
