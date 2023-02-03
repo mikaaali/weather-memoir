@@ -1,6 +1,7 @@
 package com.mikali.weathermemoir.di
 
 import com.mikali.weathermemoir.BuildConfig
+import com.mikali.weathermemoir.network.WeatherAPI
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -48,5 +49,10 @@ val networkModule = module {
             .addConverterFactory(MoshiConverterFactory.create(get()))
             .client(get())
             .build()
+    }
+
+    // WeatherAPI instance
+    single {
+        get<Retrofit>().create(WeatherAPI::class.java)
     }
 }
