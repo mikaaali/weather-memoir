@@ -1,20 +1,18 @@
-package com.mikali.weathermemoir
+package com.mikali.weathermemoir.repository
 
 import com.mikali.weathermemoir.di.appModule
 import com.mikali.weathermemoir.di.networkModule
-import com.mikali.weathermemoir.network.WeatherAPI
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
 
-class WeatherApiUnitTest : KoinTest {
+internal class WeatherRepositoryTest : KoinTest {
 
-    private val weatherApi: WeatherAPI by inject()
+    private val weatherRepository: WeatherRepository by inject()
 
     @Before
     fun setUp() {
@@ -25,12 +23,11 @@ class WeatherApiUnitTest : KoinTest {
 
     @After
     fun tearDown() {
-        stopKoin()
     }
 
     @Test
     fun getWeather() {
-        val response = weatherApi.getWeather("35.4676", "-97.508469").blockingFirst()
+        val response = weatherRepository.getWeather("35.4676", "-97.508469").blockingFirst()
         assertEquals(expected = "Oklahoma City", actual = response.name)
     }
 }

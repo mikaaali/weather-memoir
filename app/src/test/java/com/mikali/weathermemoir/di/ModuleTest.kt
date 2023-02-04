@@ -1,7 +1,5 @@
-package com.mikali.weathermemoir
+package com.mikali.weathermemoir.di
 
-import com.mikali.weathermemoir.di.appModule
-import com.mikali.weathermemoir.di.networkModule
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin

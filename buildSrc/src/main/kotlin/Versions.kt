@@ -8,6 +8,7 @@ object Versions {
     const val CODE_QUALITY_TOOLS = "0.22.0"
     const val COMPOSE_NAVIGATION = "2.5.3"
     const val FIREBASE_BOM = "28.4.1"
+    //TODO VM-1: KOIN 3.3.2 depends kotlin-reflect 1.7, therefore we currently use an older version
     const val KOIN = "3.2.0"
     const val OKHTTP = "5.0.0-alpha.2"
     const val MOSHI = "1.8.0"
