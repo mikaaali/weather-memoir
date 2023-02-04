@@ -52,6 +52,7 @@ dependencies {
     implementation(Dependencies.COMPOSE_UI)
     implementation(Dependencies.COMPOSE_MATERIAL)
     implementation(Dependencies.COMPOSE_TOOLING_PREVIEW)
+    implementation(Dependencies.COMPOSE_RUNTIME_RXJAVA)
     implementation(Dependencies.LIFECYCLE_RUNTIME)
     implementation(Dependencies.ACTIVITY_COMPOSE)
     implementation(Dependencies.NAVIGATION_COMPOSE)

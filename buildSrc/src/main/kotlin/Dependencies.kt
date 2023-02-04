@@ -7,6 +7,7 @@ object Dependencies {
     const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE}"
     //allow for @Preview feature
     const val COMPOSE_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
+    const val COMPOSE_RUNTIME_RXJAVA = "androidx.compose.runtime:runtime-rxjava2:${Versions.COMPOSE}"
 
     //Kotlin extensions for 'lifecycle' artifact
     const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE}"
