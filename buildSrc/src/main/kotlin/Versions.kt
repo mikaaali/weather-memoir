@@ -1,5 +1,8 @@
 object Versions {
     const val COMPOSE = "1.1.0-beta01"
+    const val LOTTIE = "5.2.0"
+    //TODO VM-1: COIL 2.2.2 depends kotlin-reflect 1.7, therefore we currently use an older version
+    const val COIL = "2.1.0"
     const val LIFECYCLE = "2.3.1"
     const val ACTIVITY = "1.3.1"
     const val JUNIT = "4.13.2"

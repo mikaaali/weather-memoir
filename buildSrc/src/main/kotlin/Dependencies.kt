@@ -8,6 +8,14 @@ object Dependencies {
     //allow for @Preview feature
     const val COMPOSE_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
     const val COMPOSE_RUNTIME_RXJAVA = "androidx.compose.runtime:runtime-rxjava2:${Versions.COMPOSE}"
+    const val COMPOSE_RUNTIME= "androidx.compose.runtime:runtime:${Versions.COMPOSE}"
+    const val COMPOSE_ICONS_EXTENDED  = "androidx.compose.material:material-icons-extended:${Versions.COMPOSE}"
+
+    //Airbnb lottie for Jetpack Compose
+    const val AIRBNB_LOTTIE = "com.airbnb.android:lottie-compose:${Versions.LOTTIE}"
+
+    //Network image loading library for jetpack compose
+   const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
 
     //Kotlin extensions for 'lifecycle' artifact
     const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE}"

@@ -35,6 +35,7 @@ android {
     kotlinOptions {
         allWarningsAsErrors = true
         jvmTarget = "1.8"
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
         compose = true
@@ -53,6 +54,11 @@ dependencies {
     implementation(Dependencies.COMPOSE_MATERIAL)
     implementation(Dependencies.COMPOSE_TOOLING_PREVIEW)
     implementation(Dependencies.COMPOSE_RUNTIME_RXJAVA)
+    implementation(Dependencies.COMPOSE_RUNTIME)
+    implementation(Dependencies.COMPOSE_ICONS_EXTENDED)
+    implementation(Dependencies.AIRBNB_LOTTIE)
+    //
+    implementation(Dependencies.COIL_COMPOSE)
     implementation(Dependencies.LIFECYCLE_RUNTIME)
     implementation(Dependencies.ACTIVITY_COMPOSE)
     implementation(Dependencies.NAVIGATION_COMPOSE)
@@ -64,7 +70,7 @@ dependencies {
     implementation(Dependencies.KOIN_ANDROID)
     implementation(Dependencies.OKHTTP_LOGGING)
     implementation(Dependencies.OKHTTP)
-    // TODO WM-1: `com.squareup.moshi:moshi-kotlin:1.14.0` depends on a different kotlin reflect than the project, hence we have to explicitly specify the version
+    // TODO WM-1: `com.squareup.moshi:moshi-kotlin:1.8.0` depends on a different kotlin reflect than the project, hence we have to explicitly specify the version
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.0")
     implementation(Dependencies.MOSHI)
     implementation(Dependencies.MOSHI_KOTLIN)
