@@ -1,4 +1,4 @@
-package com.mikali.weathermemoir.view
+package com.mikali.weathermemoir.view.splash
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
