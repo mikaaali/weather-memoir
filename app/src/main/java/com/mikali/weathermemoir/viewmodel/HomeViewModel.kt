@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-class MainViewModel(
+class HomeViewModel(
     private val weatherRepository: WeatherRepository
 ) : ViewModel() {
 

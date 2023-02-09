@@ -4,7 +4,5 @@ enum class NavigationScreens {
     SPLASH,
     LOGIN,
     SIGNUP,
-    MAIN,
-    QUESTIONNAIRE,
-    MEMOIR_LIST
+    MAIN
 }
