@@ -23,7 +23,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.VpnKey
@@ -39,6 +39,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -52,6 +54,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.mikali.weathermemoir.R
 import com.mikali.weathermemoir.navigation.NavigationScreens
 
 @Composable
@@ -60,20 +63,22 @@ fun LoginScreen(
     navController: NavController,
     onLoginClick: () -> Unit
 ) {
-    // val username = remember { mutableStateOf("") }
     /* remember is ok, but it does not survive configuration changes, use rememberSaveable,
     because it actually remember this value beyond configuration changes,
     imaging the user is typing something and they went to a different screen, the state might be lost, such as when you go back
     to the screen it may not be here*/
-
-    val username = rememberSaveable { mutableStateOf("") }
+    val email = rememberSaveable { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
     val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
     val headerComposition = rememberLottieComposition(
         LottieCompositionSpec.Url("https://assets8.lottiefiles.com/packages/lf20_3Bv8kIT48I.json")
     )
-    val focusRequester = remember { FocusRequester() }
+
+    // we can use this to hide the keyboard, but losing focus or use the explicit keyboard LocalSoftwareKeyboardController
+    val focusManager = LocalFocusManager.current
+    // allow us to focus on password field when onNext of the username keyboard action is performed
+    val passwordFocusRequest = FocusRequester.Default
 
     val googleLogoImageUrl =
         "https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA"
@@ -89,30 +94,30 @@ fun LoginScreen(
         )
 
         Text(
-            text = "Sign in to view your story!\nWe've missed you.",
+            text = stringResource(id = R.string.header_title),
             modifier = Modifier.fillMaxWidth(),
             style = typography.h6,
             textAlign = TextAlign.Center
         )
 
         Text(
-            "Let's start express your thoughts and ideas!"
+            text = stringResource(id = R.string.header_sub_title)
         )
 
         OutlinedTextField(
-            value = username.value,
+            value = email.value,
             onValueChange = {
-                username.value = it
+                email.value = it
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            label = { Text(text = "Username") },
-            placeholder = { Text(text = "Username") },
+            label = { Text(text = "Email") },
+            placeholder = { Text(text = "Email") },
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Default.AccountCircle,
-                    contentDescription = "AccountCircle Icon"
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "Email Icon"
                 )
             },
             isError = isError.value,
@@ -121,8 +126,8 @@ fun LoginScreen(
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onAny = {
-                    focusRequester.requestFocus()
+                onNext = {
+                    passwordFocusRequest.requestFocus()
                 }
             ),
             singleLine = true,
@@ -138,7 +143,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .focusRequester(focusRequester),
+                .focusRequester(passwordFocusRequest),
             label = { Text(text = "Password") },
             placeholder = { Text(text = "Password") },
             leadingIcon = {
@@ -166,6 +171,11 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                }
+            ),
             maxLines = 1,
             shape = CircleShape
         )
@@ -184,7 +194,7 @@ fun LoginScreen(
         // Sign In Button
         Button(
             onClick = {
-                if (username.value.isBlank() || password.value.isBlank()) {
+                if (email.value.isBlank() || password.value.isBlank()) {
                     isError.value = true
                 } else {
                     isError.value = false

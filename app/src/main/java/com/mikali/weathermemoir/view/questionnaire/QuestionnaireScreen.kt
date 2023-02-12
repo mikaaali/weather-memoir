@@ -3,6 +3,7 @@ package com.mikali.weathermemoir.view.questionnaire
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,7 +47,6 @@ import com.mikali.weathermemoir.view.theme.Teal
 @Composable
 @Preview
 fun QuestionnaireScreen() {
-    // val textInput = remember { mutableStateOf("") }
     val textInput = rememberSaveable { mutableStateOf("") }
     val readOnly = remember { mutableStateOf(false) }
 
@@ -78,7 +79,11 @@ fun QuestionnaireScreen() {
                         imageVector = Icons.Default.Autorenew,
                         modifier = Modifier
                             .align(Alignment.End)
-                            .clickable { },
+                            .clickable(
+                                indication = rememberRipple(bounded = false),
+                                interactionSource = remember { MutableInteractionSource() },
+                                onClick = {}
+                            ),
                         contentDescription = "Change Question Icon"
                     )
                     Text(

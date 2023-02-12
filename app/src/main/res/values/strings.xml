@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherMemoir</string>
+    <string name="header_title">Sign in to view your story!\nWe\'ve missed you.</string>
+    <string name="header_sub_title">Let\'s start express your thoughts and ideas!</string>
 </resources>

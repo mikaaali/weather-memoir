@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.Button
@@ -25,7 +26,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -35,17 +38,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mikali.weathermemoir.navigation.NavigationScreens
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SignupScreen(
     navController: NavController
 ) {
-    val username = rememberSaveable { mutableStateOf("") }
+    val firstName = rememberSaveable { mutableStateOf("") }
+    val lastName = rememberSaveable { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
     val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
-    val numberText = rememberSaveable { mutableStateOf("") }
     val email = rememberSaveable { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     BackdropScaffold(
         appBar = { /*TODO*/ },
@@ -78,9 +82,9 @@ fun SignupScreen(
                 }
 
                 OutlinedTextField(
-                    value = username.value,
+                    value = firstName.value,
                     onValueChange = {
-                        username.value = it
+                        firstName.value = it
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,27 +94,28 @@ fun SignupScreen(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
                     ),
-                    label = { Text(text = "Username (Required)") },
-                    placeholder = { Text(text = "Username") },
+                    label = { Text(text = "First Name (Required)") },
+                    placeholder = { Text(text = "First Name") },
                     singleLine = true,
                     maxLines = 1,
                     shape = CircleShape
                 )
 
                 OutlinedTextField(
-                    value = numberText.value,
+                    value = lastName.value,
                     onValueChange = {
-                        numberText.value = it
+                        lastName.value = it
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                        .padding(8.dp),
+                    isError = isError.value,
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
+                        keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
                     ),
-                    label = { Text(text = "Phone number (Optional)") },
-                    placeholder = { Text(text = "000-000-0000") },
+                    label = { Text(text = "Last Name (Optional)") },
+                    placeholder = { Text(text = "Last Name") },
                     singleLine = true,
                     maxLines = 1,
                     shape = CircleShape
@@ -128,8 +133,8 @@ fun SignupScreen(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
                     ),
-                    label = { Text(text = "Email (Optional)") },
-                    placeholder = { Text(text = "000-000-0000") },
+                    label = { Text(text = "Email (Required)") },
+                    placeholder = { Text(text = "xxx@xxx.xxx") },
                     singleLine = true,
                     maxLines = 1,
                     shape = CircleShape
@@ -145,7 +150,7 @@ fun SignupScreen(
                         .fillMaxWidth()
                         .padding(8.dp),
                     label = { Text(text = "Password (Required)") },
-                    placeholder = { Text(text = "Password") },
+                    placeholder = { Text(text = "Password - at least 6 characters") },
                     trailingIcon = {
                         Icon(
                             imageVector = if (passwordVisible.value) Icons.Default.Visibility else Icons.Default.VisibilityOff,
@@ -165,6 +170,11 @@ fun SignupScreen(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
                     ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                        }
+                    ),
                     maxLines = 1,
                     shape = CircleShape
                 )
@@ -172,7 +182,7 @@ fun SignupScreen(
                 // Create Account Button
                 Button(
                     onClick = {
-                        if (username.value.isBlank() || password.value.isBlank()) {
+                        if (firstName.value.isBlank() || email.value.isBlank() || password.value.isBlank()) {
                             isError.value = true
                         } else {
                             isError.value = false
