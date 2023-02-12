@@ -23,6 +23,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -39,12 +40,12 @@ import com.mikali.weathermemoir.navigation.NavigationScreens
 fun SignupScreen(
     navController: NavController
 ) {
-    val username = remember { mutableStateOf("") }
+    val username = rememberSaveable { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    val password = remember { mutableStateOf("") }
+    val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
-    val numberText = remember { mutableStateOf("") }
-    val email = remember { mutableStateOf("") }
+    val numberText = rememberSaveable { mutableStateOf("") }
+    val email = rememberSaveable { mutableStateOf("") }
 
     BackdropScaffold(
         appBar = { /*TODO*/ },

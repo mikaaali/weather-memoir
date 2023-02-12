@@ -31,6 +31,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -59,9 +60,15 @@ fun LoginScreen(
     navController: NavController,
     onLoginClick: () -> Unit
 ) {
-    val username = remember { mutableStateOf("") }
+    // val username = remember { mutableStateOf("") }
+    /* remember is ok, but it does not survive configuration changes, use rememberSaveable,
+    because it actually remember this value beyond configuration changes,
+    imaging the user is typing something and they went to a different screen, the state might be lost, such as when you go back
+    to the screen it may not be here*/
+
+    val username = rememberSaveable { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    val password = remember { mutableStateOf("") }
+    val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
     val headerComposition = rememberLottieComposition(
         LottieCompositionSpec.Url("https://assets8.lottiefiles.com/packages/lf20_3Bv8kIT48I.json")

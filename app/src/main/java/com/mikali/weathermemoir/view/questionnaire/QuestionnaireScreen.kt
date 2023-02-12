@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -44,7 +45,8 @@ import com.mikali.weathermemoir.view.theme.Teal
 @Composable
 @Preview
 fun QuestionnaireScreen() {
-    val textInput = remember { mutableStateOf("") }
+    // val textInput = remember { mutableStateOf("") }
+    val textInput = rememberSaveable { mutableStateOf("") }
     val readOnly = remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -67,11 +69,15 @@ fun QuestionnaireScreen() {
                     style = typography.h6
                 )
                 Column(
-                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically).padding(8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .padding(8.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Autorenew,
-                        modifier = Modifier.align(Alignment.End)
+                        modifier = Modifier
+                            .align(Alignment.End)
                             .clickable { },
                         contentDescription = "Change Question Icon"
                     )

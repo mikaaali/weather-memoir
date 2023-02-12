@@ -26,7 +26,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -46,7 +46,7 @@ fun MemoirListScreen(
 ) {
     // want to gain control of the keyboard, so we can hide the keyboard when needed
     val keyboardController = LocalSoftwareKeyboardController.current
-    val query = remember { mutableStateOf("") }
+    val query = rememberSaveable { mutableStateOf("") }
 
     Column() {
         // Search Field
