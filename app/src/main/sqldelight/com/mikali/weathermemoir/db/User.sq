@@ -1,0 +1,5 @@
+CREATE TABLE User(
+    uid TEXT NOT NULL PRIMARY KEY,
+    firstname TEXT NOT NULL,
+    lastname TEXT
+);

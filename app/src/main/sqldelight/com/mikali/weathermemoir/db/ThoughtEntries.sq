@@ -1,0 +1,14 @@
+import java.time.ZonedDateTime;
+
+CREATE TABLE ThoughtEntries(
+    entryId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    uid TEXT NOT NULL,
+    question TEXT NOT NULL,
+    thought TEXT,
+    creationTime INTEGER AS ZonedDateTime NOT NULL,
+    mainWeatherConditionDescription TEXT NOT NULL,
+
+    FOREIGN KEY(uid)
+        REFERENCES User(uid)
+        ON DELETE CASCADE
+);
