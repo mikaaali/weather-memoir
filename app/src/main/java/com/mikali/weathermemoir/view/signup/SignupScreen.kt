@@ -192,7 +192,11 @@ fun SignupScreen(
                             isError.value = true
                         } else {
                             isError.value = false
-                            navController.navigate(route = NavigationScreens.MAIN.name)
+                            viewModel.signupWithEmailAndPassword(
+                                email = state.email,
+                                password = state.password,
+                                navController = navController
+                            )
                         }
                     },
                     shape = CircleShape

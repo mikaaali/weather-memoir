@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.mikali.weathermemoir.navigation.NavigationScreens
 import com.mikali.weathermemoir.util.Constants
 import io.reactivex.Observable
@@ -14,7 +12,9 @@ import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class LoginViewModel() : ViewModel() {
+class LoginViewModel(
+    private val firebaseAuth: FirebaseAuth
+) : ViewModel() {
 
     data class MutableState(
         val email: String,
@@ -27,9 +27,6 @@ class LoginViewModel() : ViewModel() {
     private val currentMutableState: MutableState
         get() = behaviorSubject.value
             ?: MutableState("", "")
-
-    // create an instance of FirebaseAuth, so we can get access to the firebase auth tool
-    private val firebaseAuth: FirebaseAuth = Firebase.auth
 
     // the reason we wrap it inside a viewModelScope because we want to Launches a new coroutine without blocking the current main thread
     fun loginWithEmailAndPassword(email: String, password: String, navController: NavController): Job = viewModelScope.launch {
