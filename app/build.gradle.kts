@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    // the plugin allow us to use @Parcelize
+    id("kotlin-parcelize")
 }
 
 android {
