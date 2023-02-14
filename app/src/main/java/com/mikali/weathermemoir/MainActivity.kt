@@ -12,12 +12,16 @@ import com.mikali.weathermemoir.navigation.Navigation
 import com.mikali.weathermemoir.view.theme.WeatherMemoirTheme
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
 import com.mikali.weathermemoir.viewmodel.LoginViewModel
+import com.mikali.weathermemoir.viewmodel.SignupViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
     // Lazy inject login screen ViewModel
     private val loginViewModel: LoginViewModel by viewModel()
+
+    // Lazy inject signup screen ViewModel
+    private val signupViewModel: SignupViewModel by viewModel()
 
     // Lazy inject home screen ViewModel
     private val homeViewModel: HomeViewModel by viewModel()
@@ -34,6 +38,7 @@ class MainActivity : ComponentActivity() {
             database.collection("user account").add(user)
             WeatherMemoirApp(
                 loginViewModel = loginViewModel,
+                signupViewModel = signupViewModel,
                 homeViewModel = homeViewModel
             )
         }
@@ -48,6 +53,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WeatherMemoirApp(
     loginViewModel: LoginViewModel,
+    signupViewModel: SignupViewModel,
     homeViewModel: HomeViewModel
 ) {
     WeatherMemoirTheme {
@@ -56,6 +62,7 @@ fun WeatherMemoirApp(
         ) {
             Navigation(
                 loginViewModel = loginViewModel,
+                signupViewModel = signupViewModel,
                 homeViewModel = homeViewModel
             )
         }

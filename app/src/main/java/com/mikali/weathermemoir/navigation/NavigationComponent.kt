@@ -10,10 +10,12 @@ import com.mikali.weathermemoir.view.signup.SignupScreen
 import com.mikali.weathermemoir.view.splash.SplashScreen
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
 import com.mikali.weathermemoir.viewmodel.LoginViewModel
+import com.mikali.weathermemoir.viewmodel.SignupViewModel
 
 @Composable
 fun Navigation(
     loginViewModel: LoginViewModel,
+    signupViewModel: SignupViewModel,
     homeViewModel: HomeViewModel
 ) {
     val navController = rememberNavController()
@@ -33,7 +35,7 @@ fun Navigation(
             )
         }
         composable(route = NavigationScreens.SIGNUP.name) {
-            SignupScreen(navController = navController)
+            SignupScreen(viewModel = signupViewModel, navController = navController)
         }
         composable(route = NavigationScreens.MAIN.name) {
             MainScreen(homeViewModel = homeViewModel)

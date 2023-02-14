@@ -24,7 +24,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rxjava2.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -37,19 +37,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mikali.weathermemoir.navigation.NavigationScreens
+import com.mikali.weathermemoir.viewmodel.SignupViewModel
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SignupScreen(
+    viewModel: SignupViewModel,
     navController: NavController
 ) {
-    val firstName = rememberSaveable { mutableStateOf("") }
-    val lastName = rememberSaveable { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
-    val email = rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val state = viewModel.signupObservable.subscribeAsState(
+        initial = SignupViewModel.MutableState(
+            "",
+            "",
+            "",
+            ""
+        )
+    ).value
 
     BackdropScaffold(
         appBar = { /*TODO*/ },
@@ -82,9 +88,9 @@ fun SignupScreen(
                 }
 
                 OutlinedTextField(
-                    value = firstName.value,
+                    value = state.firstName,
                     onValueChange = {
-                        firstName.value = it
+                        viewModel.onFirstNameValueChange(it)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -102,9 +108,9 @@ fun SignupScreen(
                 )
 
                 OutlinedTextField(
-                    value = lastName.value,
+                    value = state.lastName,
                     onValueChange = {
-                        lastName.value = it
+                        viewModel.onLastNameValueChange(it)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -122,9 +128,9 @@ fun SignupScreen(
                 )
 
                 OutlinedTextField(
-                    value = email.value,
+                    value = state.email,
                     onValueChange = {
-                        email.value = it
+                        viewModel.onEmailValueChange(it)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -142,9 +148,9 @@ fun SignupScreen(
                 )
 
                 OutlinedTextField(
-                    value = password.value,
+                    value = state.password,
                     onValueChange = {
-                        password.value = it
+                        viewModel.onPasswordValueChange(it)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -182,7 +188,7 @@ fun SignupScreen(
                 // Create Account Button
                 Button(
                     onClick = {
-                        if (firstName.value.isBlank() || email.value.isBlank() || password.value.isBlank()) {
+                        if (state.firstName.isBlank() || state.email.isBlank() || state.password.isBlank()) {
                             isError.value = true
                         } else {
                             isError.value = false
