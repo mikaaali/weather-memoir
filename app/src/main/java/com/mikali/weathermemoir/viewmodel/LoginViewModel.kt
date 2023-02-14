@@ -18,7 +18,8 @@ class LoginViewModel(
 
     data class MutableState(
         val email: String,
-        val password: String
+        val password: String,
+        val errorMessage: String
     )
 
     private val behaviorSubject: BehaviorSubject<MutableState> = BehaviorSubject.create() // used internally inside the class
@@ -26,7 +27,15 @@ class LoginViewModel(
 
     private val currentMutableState: MutableState
         get() = behaviorSubject.value
-            ?: MutableState("", "")
+            ?: MutableState("", "", "")
+
+    fun onEmailFieldChange(email: String) {
+        behaviorSubject.onNext(currentMutableState.copy(email = email))
+    }
+
+    fun onPasswordFieldChange(password: String) {
+        behaviorSubject.onNext(currentMutableState.copy(password = password))
+    }
 
     // the reason we wrap it inside a viewModelScope because we want to Launches a new coroutine without blocking the current main thread
     fun loginWithEmailAndPassword(email: String, password: String, navController: NavController): Job = viewModelScope.launch {
@@ -39,19 +48,16 @@ class LoginViewModel(
                         Log.d("haha", "Login successful")
                     } else {
                         // show dialog with the error message
-                        Log.d("haha", "Did not login successful")
+                        behaviorSubject.onNext(currentMutableState.copy(errorMessage = "Not able to Login.\nTry again"))
                     }
                 }
         } catch (e: Exception) {
+            behaviorSubject.onNext(currentMutableState.copy(errorMessage = "${e.message}"))
             Log.e(Constants.LOGIN_TAG, "loginWithEmailAndPassword: ${e.message}")
         }
     }
 
-    fun onEmailFieldChange(email: String) {
-        behaviorSubject.onNext(currentMutableState.copy(email = email))
-    }
-
-    fun onPasswordFieldChange(password: String) {
-        behaviorSubject.onNext(currentMutableState.copy(password = password))
+    fun onErrorConfirmationClick() {
+        behaviorSubject.onNext(currentMutableState.copy(errorMessage = ""))
     }
 }

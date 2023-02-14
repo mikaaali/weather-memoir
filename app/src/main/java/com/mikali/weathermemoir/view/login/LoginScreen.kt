@@ -64,7 +64,13 @@ fun LoginScreen(
     viewModel: LoginViewModel,
     navController: NavController
 ) {
-    val state = viewModel.loginObservable.subscribeAsState(initial = LoginViewModel.MutableState(email = "", password = "")).value
+    val state = viewModel.loginObservable.subscribeAsState(
+        initial = LoginViewModel.MutableState(
+            email = "",
+            password = "",
+            errorMessage = ""
+        )
+    ).value
     val isError = remember { mutableStateOf(false) }
     val passwordVisible = remember { mutableStateOf(false) }
     val headerComposition = rememberLottieComposition(
@@ -78,6 +84,10 @@ fun LoginScreen(
 
     val googleLogoImageUrl =
         "https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA"
+
+    if (state.errorMessage.isNotBlank()) {
+        ErrorDialog(viewModel, state)
+    }
 
     Column(
         modifier = modifier.verticalScroll(state = rememberScrollState()),
