@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.mikali.weathermemoir.R
 import com.mikali.weathermemoir.navigation.NavigationScreens
 import com.mikali.weathermemoir.view.theme.Cyan
@@ -52,9 +53,12 @@ fun SplashScreen(
                 )
             )
             delay(1500)
-            navController.navigate(
-                route = NavigationScreens.LOGIN.name
-            )
+            // if user is already authenticated (logged in), we can go directly to the main screen
+            if (FirebaseAuth.getInstance().currentUser?.email.isNullOrBlank()) {
+                navController.navigate(route = NavigationScreens.LOGIN.name)
+            } else {
+                navController.navigate(route = NavigationScreens.MAIN.name)
+            }
         }
     )
 
