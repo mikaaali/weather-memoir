@@ -61,10 +61,10 @@ import com.mikali.weathermemoir.viewmodel.LoginViewModel
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    loginViewModel: LoginViewModel,
+    viewModel: LoginViewModel,
     navController: NavController
 ) {
-    val state = loginViewModel.loginObservable.subscribeAsState(initial = LoginViewModel.MutableState(email = "", password = "")).value
+    val state = viewModel.loginObservable.subscribeAsState(initial = LoginViewModel.MutableState(email = "", password = "")).value
     val isError = remember { mutableStateOf(false) }
     val passwordVisible = remember { mutableStateOf(false) }
     val headerComposition = rememberLottieComposition(
@@ -103,7 +103,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = state.email,
             onValueChange = {
-                loginViewModel.onEmailFieldChange(it)
+                viewModel.onEmailFieldChange(it)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,7 +134,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = state.password,
             onValueChange = {
-                loginViewModel.onPasswordFieldChange(it)
+                viewModel.onPasswordFieldChange(it)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,7 +194,7 @@ fun LoginScreen(
                     isError.value = true
                 } else {
                     isError.value = false
-                    loginViewModel.loginWithEmailAndPassword(
+                    viewModel.loginWithEmailAndPassword(
                         email = state.email,
                         password = state.password,
                         navController = navController

@@ -28,7 +28,7 @@ fun Navigation(
         }
         composable(route = NavigationScreens.LOGIN.name) {
             LoginScreen(
-                loginViewModel = loginViewModel,
+                viewModel = loginViewModel,
                 navController = navController
             )
         }
