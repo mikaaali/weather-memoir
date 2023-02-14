@@ -5,6 +5,7 @@ plugins {
     id("com.google.gms.google-services")
     // the plugin allow us to use @Parcelize
     id("kotlin-parcelize")
+    id("app.cash.sqldelight")
 }
 
 android {
@@ -81,6 +82,9 @@ dependencies {
     implementation(Dependencies.RETROFIT_ADAPTER_RXJAVA)
     implementation(Dependencies.RX_KOTLIN)
     implementation(Dependencies.RX_ANDROID)
+    implementation(Dependencies.SQL_DELIGHT_ANDROID_DRIVER)
+    implementation(Dependencies.SQL_DELIGHT_RXJAVA_EXTENSIONS)
+    testImplementation(Dependencies.SQL_DELIGHT_TEST_DRIVER)
     testImplementation(Dependencies.JUNIT)
     testImplementation(Dependencies.KOIN_TEST)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
@@ -88,4 +92,21 @@ dependencies {
     androidTestImplementation(Dependencies.COMPOSE_UI_TESTING)
     debugImplementation(Dependencies.COMPOSE_UI_TOOLING)
     debugImplementation(Dependencies.COMPOSE_UI_TEST_MANIFEST)
+}
+
+sqldelight {
+    // declare the name of the database, also the generated name of the database
+    database("SQLDelightDatabase") {
+        // this is the package path for the automatic generated data class
+        packageName = "com.mikali.weathermemoir.db"
+        // this folder will contain the source set for sqlDelight script files (tables and migrations)
+        sourceFolders = listOf("sqldelight")
+        // empty database file path used for testing
+        schemaOutputDirectory = file("src/main/sqldelight/schemas")
+        // will give migration error if there is one when we update the database version
+        verifyMigrations = true
+        // there are different version of sql, such as PostgreSQL or MySQL, can use the following to specify the use case
+        // default is SQLite
+        // dialect()
+    }
 }

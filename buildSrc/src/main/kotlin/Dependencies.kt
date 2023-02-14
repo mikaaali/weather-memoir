@@ -67,4 +67,10 @@ object Dependencies {
     //RxJava, RxKotlin, RxAndroid
     const val RX_KOTLIN = "io.reactivex.rxjava2:rxkotlin:${Versions.RX_KOTLIN}"
     const val RX_ANDROID = "io.reactivex.rxjava2:rxandroid:${Versions.RX_ANDROID}"
+
+    //SQLDelight
+    const val SQL_DELIGHT_GRADLE_PLUGIN = "app.cash.sqldelight:gradle-plugin:${Versions.SQL_DELIGHT}"
+    const val SQL_DELIGHT_ANDROID_DRIVER = "app.cash.sqldelight:android-driver:${Versions.SQL_DELIGHT}"
+    const val SQL_DELIGHT_RXJAVA_EXTENSIONS = "app.cash.sqldelight:rxjava2-extensions:${Versions.SQL_DELIGHT}"
+    const val SQL_DELIGHT_TEST_DRIVER = "app.cash.sqldelight:sqlite-driver:${Versions.SQL_DELIGHT}"
 }
