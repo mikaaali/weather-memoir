@@ -31,7 +31,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rxjava2.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -56,20 +56,16 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mikali.weathermemoir.R
 import com.mikali.weathermemoir.navigation.NavigationScreens
+import com.mikali.weathermemoir.viewmodel.LoginViewModel
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    navController: NavController,
-    onLoginClick: () -> Unit
+    loginViewModel: LoginViewModel,
+    navController: NavController
 ) {
-    /* remember is ok, but it does not survive configuration changes, use rememberSaveable,
-    because it actually remember this value beyond configuration changes,
-    imaging the user is typing something and they went to a different screen, the state might be lost, such as when you go back
-    to the screen it may not be here*/
-    val email = rememberSaveable { mutableStateOf("") }
+    val state = loginViewModel.loginObservable.subscribeAsState(initial = LoginViewModel.MutableState(email = "", password = "")).value
     val isError = remember { mutableStateOf(false) }
-    val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
     val headerComposition = rememberLottieComposition(
         LottieCompositionSpec.Url("https://assets8.lottiefiles.com/packages/lf20_3Bv8kIT48I.json")
@@ -105,9 +101,9 @@ fun LoginScreen(
         )
 
         OutlinedTextField(
-            value = email.value,
+            value = state.email,
             onValueChange = {
-                email.value = it
+                loginViewModel.onEmailFieldChange(it)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -136,9 +132,9 @@ fun LoginScreen(
         )
 
         OutlinedTextField(
-            value = password.value,
+            value = state.password,
             onValueChange = {
-                password.value = it
+                loginViewModel.onPasswordFieldChange(it)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,11 +190,10 @@ fun LoginScreen(
         // Sign In Button
         Button(
             onClick = {
-                if (email.value.isBlank() || password.value.isBlank()) {
+                if (state.email.isBlank() || state.password.isBlank()) {
                     isError.value = true
                 } else {
                     isError.value = false
-                    onLoginClick()
                     navController.navigate(route = NavigationScreens.MAIN.name)
                 }
             },

@@ -11,9 +11,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mikali.weathermemoir.navigation.Navigation
 import com.mikali.weathermemoir.view.theme.WeatherMemoirTheme
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
+import com.mikali.weathermemoir.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    // Lazy inject login screen ViewModel
+    private val loginViewModel: LoginViewModel by viewModel()
 
     // Lazy inject home screen ViewModel
     private val homeViewModel: HomeViewModel by viewModel()
@@ -29,6 +33,7 @@ class MainActivity : ComponentActivity() {
             // create a table in cloud firestore and add an entry
             database.collection("user account").add(user)
             WeatherMemoirApp(
+                loginViewModel = loginViewModel,
                 homeViewModel = homeViewModel
             )
         }
@@ -42,6 +47,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WeatherMemoirApp(
+    loginViewModel: LoginViewModel,
     homeViewModel: HomeViewModel
 ) {
     WeatherMemoirTheme {
@@ -49,6 +55,7 @@ fun WeatherMemoirApp(
             modifier = Modifier.fillMaxSize()
         ) {
             Navigation(
+                loginViewModel = loginViewModel,
                 homeViewModel = homeViewModel
             )
         }
