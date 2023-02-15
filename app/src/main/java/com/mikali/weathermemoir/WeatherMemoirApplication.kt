@@ -3,6 +3,7 @@ package com.mikali.weathermemoir
 import android.app.Application
 import com.google.firebase.FirebaseApp
 import com.mikali.weathermemoir.di.appModule
+import com.mikali.weathermemoir.di.databaseModule
 import com.mikali.weathermemoir.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -23,7 +24,7 @@ class WeatherMemoirApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@WeatherMemoirApplication)
-            modules(listOf(networkModule, appModule))
+            modules(listOf(networkModule, appModule, databaseModule))
         }
     }
 }
