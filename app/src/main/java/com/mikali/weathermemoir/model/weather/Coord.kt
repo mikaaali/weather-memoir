@@ -1,4 +1,4 @@
-package com.mikali.weathermemoir.model
+package com.mikali.weathermemoir.model.weather
 
 data class Coord(
     val lat: Double? = null,

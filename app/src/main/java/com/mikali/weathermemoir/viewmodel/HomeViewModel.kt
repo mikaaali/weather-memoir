@@ -2,7 +2,7 @@ package com.mikali.weathermemoir.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.mikali.weathermemoir.model.Weather
+import com.mikali.weathermemoir.model.weather.Weather
 import com.mikali.weathermemoir.repository.WeatherRepository
 import com.mikali.weathermemoir.util.Constants
 import io.reactivex.Observable

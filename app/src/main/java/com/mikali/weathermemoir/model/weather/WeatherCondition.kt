@@ -1,4 +1,4 @@
-package com.mikali.weathermemoir.model
+package com.mikali.weathermemoir.model.weather
 
 data class WeatherCondition(
     val id: Int? = null,

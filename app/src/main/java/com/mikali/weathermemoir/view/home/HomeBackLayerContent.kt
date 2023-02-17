@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.mikali.weathermemoir.R
-import com.mikali.weathermemoir.model.Weather
+import com.mikali.weathermemoir.model.weather.Weather
 
 @Composable
 fun HomeBackLayerContent(state: Weather) {

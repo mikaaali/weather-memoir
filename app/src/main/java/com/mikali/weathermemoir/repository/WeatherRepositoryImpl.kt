@@ -1,6 +1,6 @@
 package com.mikali.weathermemoir.repository
 
-import com.mikali.weathermemoir.model.Weather
+import com.mikali.weathermemoir.model.weather.Weather
 import com.mikali.weathermemoir.network.WeatherAPI
 import io.reactivex.Observable
 
