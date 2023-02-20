@@ -8,10 +8,12 @@ import com.mikali.weathermemoir.view.home.HomeScreen
 import com.mikali.weathermemoir.view.list.MemoirListScreen
 import com.mikali.weathermemoir.view.questionnaire.QuestionnaireScreen
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
+import com.mikali.weathermemoir.viewmodel.QuestionnaireViewModel
 
 @Composable
 fun MainScreen(
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    questionnaireViewModel: QuestionnaireViewModel
 ) {
     val bottomNavigationScreens = remember { mutableStateOf(BottomNavigationScreens.HOME) }
     Scaffold(
@@ -19,7 +21,7 @@ fun MainScreen(
         content = {
             when (bottomNavigationScreens.value) {
                 BottomNavigationScreens.HOME -> HomeScreen(viewModel = homeViewModel)
-                BottomNavigationScreens.QUESTIONNAIRE -> QuestionnaireScreen()
+                BottomNavigationScreens.QUESTIONNAIRE -> QuestionnaireScreen(viewModel = questionnaireViewModel)
                 BottomNavigationScreens.MEMOIR_LIST -> MemoirListScreen()
             }
         }

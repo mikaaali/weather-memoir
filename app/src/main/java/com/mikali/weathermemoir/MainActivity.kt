@@ -11,6 +11,7 @@ import com.mikali.weathermemoir.navigation.Navigation
 import com.mikali.weathermemoir.view.theme.WeatherMemoirTheme
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
 import com.mikali.weathermemoir.viewmodel.LoginViewModel
+import com.mikali.weathermemoir.viewmodel.QuestionnaireViewModel
 import com.mikali.weathermemoir.viewmodel.SignupViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,13 +26,17 @@ class MainActivity : ComponentActivity() {
     // Lazy inject home screen ViewModel
     private val homeViewModel: HomeViewModel by viewModel()
 
+    // Lazy inject questionnaire ViewModel
+    private val questionnaireViewModel: QuestionnaireViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WeatherMemoirApp(
                 loginViewModel = loginViewModel,
                 signupViewModel = signupViewModel,
-                homeViewModel = homeViewModel
+                homeViewModel = homeViewModel,
+                questionnaireViewModel = questionnaireViewModel
             )
         }
     }
@@ -46,7 +51,8 @@ class MainActivity : ComponentActivity() {
 fun WeatherMemoirApp(
     loginViewModel: LoginViewModel,
     signupViewModel: SignupViewModel,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    questionnaireViewModel: QuestionnaireViewModel
 ) {
     WeatherMemoirTheme {
         Box(
@@ -55,7 +61,8 @@ fun WeatherMemoirApp(
             Navigation(
                 loginViewModel = loginViewModel,
                 signupViewModel = signupViewModel,
-                homeViewModel = homeViewModel
+                homeViewModel = homeViewModel,
+                questionnaireViewModel = questionnaireViewModel
             )
         }
     }

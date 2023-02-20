@@ -27,7 +27,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rxjava2.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,18 +36,24 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mikali.weathermemoir.view.theme.Cyan
 import com.mikali.weathermemoir.view.theme.Green
 import com.mikali.weathermemoir.view.theme.LightGreen
 import com.mikali.weathermemoir.view.theme.SuperLightGreen
 import com.mikali.weathermemoir.view.theme.Teal
+import com.mikali.weathermemoir.viewmodel.QuestionnaireViewModel
 
 @Composable
-@Preview
-fun QuestionnaireScreen() {
-    val textInput = rememberSaveable { mutableStateOf("") }
+fun QuestionnaireScreen(
+    viewModel: QuestionnaireViewModel
+) {
+    val state = viewModel.questionnaireObservable.subscribeAsState(
+        initial = QuestionnaireViewModel.MutableState(
+            question = "",
+            thought = ""
+        )
+    ).value
     val readOnly = remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -63,7 +69,7 @@ fun QuestionnaireScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "What is your earliest memory?",
+                    text = state.question,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(2f),
@@ -82,7 +88,9 @@ fun QuestionnaireScreen() {
                             .clickable(
                                 indication = rememberRipple(bounded = false),
                                 interactionSource = remember { MutableInteractionSource() },
-                                onClick = {}
+                                onClick = {
+                                    viewModel.onToggleClick()
+                                }
                             ),
                         contentDescription = "Change Question Icon"
                     )
@@ -108,9 +116,9 @@ fun QuestionnaireScreen() {
                 )
             ) {
                 BasicTextField(
-                    value = textInput.value,
+                    value = state.thought,
                     onValueChange = {
-                        textInput.value = it
+                        viewModel.onTextFieldChange(it)
                     },
                     modifier = Modifier
                         .padding(16.dp)

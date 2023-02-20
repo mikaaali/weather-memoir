@@ -5,4 +5,5 @@ object Constants {
     const val MAIN_TAG = "MainViewModel"
     const val LOGIN_TAG = "LoginViewModel"
     const val SIGNUP_TAG = "SignupViewModel"
+    const val Questionnaire_TAG = "QuestionnaireViewModel"
 }
