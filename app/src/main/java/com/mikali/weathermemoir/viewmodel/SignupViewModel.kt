@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mikali.weathermemoir.model.UserInfo
 import com.mikali.weathermemoir.navigation.NavigationScreens
 import com.mikali.weathermemoir.util.Constants
 import io.reactivex.Observable
@@ -54,7 +55,7 @@ class SignupViewModel(
                 .addOnCompleteListener { authResult ->
                     if (authResult.isSuccessful) {
                         navController.navigate(route = NavigationScreens.MAIN.name)
-                        createUser()
+                        saveNewUserToFirestore()
                         Log.d("haha", "Signup successful")
                     } else {
                         // show dialog with the error message
@@ -66,13 +67,14 @@ class SignupViewModel(
         }
     }
 
-    private fun createUser() {
-        val user = mutableMapOf<String, Any>()
-        user["uid"] = firebaseAuth.currentUser?.uid.toString()
-        user["first_name"] = currentMutableState.firstName
-        user["last_name"] = currentMutableState.lastName
-        user["email"] = currentMutableState.email
-        user["password"] = currentMutableState.password
+    private fun saveNewUserToFirestore() {
+        val user = UserInfo(
+            uid = firebaseAuth.currentUser?.uid.toString(),
+            firstName = currentMutableState.firstName,
+            lastName = currentMutableState.lastName,
+            email = currentMutableState.email,
+            memoirList = emptyList()
+        ).toMutableMap()
 
         FirebaseFirestore.getInstance().collection("user_info").add(user)
     }
