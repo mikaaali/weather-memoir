@@ -58,7 +58,7 @@ fun SignupScreen(
     ).value
 
     BackdropScaffold(
-        appBar = { /*TODO*/ },
+        appBar = { /*No operation*/ },
         backLayerContent = {},
         frontLayerContent = {
             Column(

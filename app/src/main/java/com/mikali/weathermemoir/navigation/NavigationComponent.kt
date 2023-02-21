@@ -42,7 +42,8 @@ fun Navigation(
         composable(route = NavigationScreens.MAIN.name) {
             MainScreen(
                 homeViewModel = homeViewModel,
-                questionnaireViewModel = questionnaireViewModel
+                questionnaireViewModel = questionnaireViewModel,
+                navController = navController
             )
         }
     }

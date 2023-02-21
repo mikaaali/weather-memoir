@@ -55,7 +55,7 @@ fun HomeScreen(
         }
     } else {
         BackdropScaffold(
-            appBar = { /*TODO*/ },
+            appBar = { /*No Operation*/ },
             backLayerContent = {
                 if (state != null) {
                     HomeBackLayerContent(state)
