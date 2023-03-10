@@ -3,16 +3,16 @@ package com.mikali.weathermemoir.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.mikali.weathermemoir.model.UserInfo
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.mikali.weathermemoir.navigation.NavigationScreens
+import com.mikali.weathermemoir.repository.DatabaseRepository
 import com.mikali.weathermemoir.util.Constants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 class SignupViewModel(
-    private val firebaseAuth: FirebaseAuth
+    private val databaseRepository: DatabaseRepository
 ) : ViewModel() {
 
     data class MutableState(
@@ -51,11 +51,11 @@ class SignupViewModel(
         navController: NavController
     ) {
         try {
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
+            Firebase.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { authResult ->
                     if (authResult.isSuccessful) {
                         navController.navigate(route = NavigationScreens.MAIN.name)
-                        saveNewUserToFirestore()
+                        saveNewUserToLocalDatabase()
                         Log.d("haha", "Signup successful")
                     } else {
                         // show dialog with the error message
@@ -67,15 +67,13 @@ class SignupViewModel(
         }
     }
 
-    private fun saveNewUserToFirestore() {
-        val user = UserInfo(
-            uid = firebaseAuth.currentUser?.uid.toString(),
-            firstName = currentMutableState.firstName,
-            lastName = currentMutableState.lastName,
-            email = currentMutableState.email,
-            memoirList = emptyList()
-        ).toMutableMap()
-
-        FirebaseFirestore.getInstance().collection("user_info").add(user)
+    private fun saveNewUserToLocalDatabase() {
+        Firebase.auth.currentUser?.uid.let {
+            databaseRepository.saveUser(
+                uid = it ?: "",
+                firstName = currentMutableState.firstName,
+                lastName = currentMutableState.lastName
+            )
+        }
     }
 }
