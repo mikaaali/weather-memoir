@@ -4,16 +4,24 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.mikali.weathermemoir.navigation.NavigationScreens
+import com.mikali.weathermemoir.repository.DatabaseRepository
+import com.mikali.weathermemoir.repository.FirestoreRepository
 import com.mikali.weathermemoir.util.Constants
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class LoginViewModel(
-    private val firebaseAuth: FirebaseAuth
+    private val databaseRepository: DatabaseRepository,
+    private val firestoreRepository: FirestoreRepository
 ) : ViewModel() {
 
     data class MutableState(
@@ -40,12 +48,44 @@ class LoginViewModel(
     // the reason we wrap it inside a viewModelScope because we want to Launches a new coroutine without blocking the current main thread
     fun loginWithEmailAndPassword(email: String, password: String, navController: NavController): Job = viewModelScope.launch {
         try {
-            firebaseAuth.signInWithEmailAndPassword(email, password)
+            Firebase.auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { authResult ->
                     if (authResult.isSuccessful) {
+                        // get user info from firebase firestore database
+                        firestoreRepository.getAllUserInfo()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .subscribe(
+                                {
+                                    val first = it[0]
+                                    // save user info to local sqlDelight database
+                                    first.authUid?.let { authUid ->
+                                        databaseRepository.saveUser(
+                                            uid = authUid,
+                                            firstName = first.firstName ?: "",
+                                            lastName = first.lastName ?: ""
+                                        )
+                                    }
+                                    first.memoirList?.forEach { memoir ->
+                                        first.authUid?.let { authUid ->
+                                            databaseRepository.saveThoughtEntries(
+                                                uid = authUid,
+                                                question = memoir.question,
+                                                thought = memoir.thought,
+                                                creationTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(memoir.creationTime.toLong()), ZoneId.of("UTC")),
+                                                mainWeatherConditionIcon = memoir.mainWeatherConditionIcon,
+                                                mainWeatherConditionDescription = memoir.mainWeatherConditionDescription
+                                            )
+                                        }
+                                    }
+                                },
+                                {
+                                    Log.e(Constants.LOGIN_TAG, "Error getting user info from remote firestore database", it)
+                                }
+                            )
+
                         // take the user main screen
                         navController.navigate(route = NavigationScreens.MAIN.name)
-                        Log.d("haha", "Login successful")
                     } else {
                         // show dialog with the error message
                         behaviorSubject.onNext(currentMutableState.copy(errorMessage = "Not able to Login.\nTry again"))
