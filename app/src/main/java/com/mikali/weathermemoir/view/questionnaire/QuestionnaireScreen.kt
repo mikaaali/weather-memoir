@@ -1,150 +1,96 @@
 package com.mikali.weathermemoir.view.questionnaire
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.Surface
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Autorenew
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rxjava2.subscribeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.mikali.weathermemoir.view.theme.Cyan
 import com.mikali.weathermemoir.view.theme.Green
-import com.mikali.weathermemoir.view.theme.LightGreen
 import com.mikali.weathermemoir.view.theme.SuperLightGreen
-import com.mikali.weathermemoir.view.theme.Teal
 import com.mikali.weathermemoir.viewmodel.QuestionnaireViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun QuestionnaireScreen(
     viewModel: QuestionnaireViewModel
 ) {
     val state = viewModel.questionnaireObservable.subscribeAsState(
         initial = QuestionnaireViewModel.MutableState(
+            firstName = "",
             question = "",
-            thought = ""
+            thought = "",
+            readOnly = false
         )
     ).value
-    val readOnly = remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
-    Box(modifier = Modifier.fillMaxWidth()) {
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(start = 4.dp)
         ) {
-            Row(
+            Text(
+                text = state.firstName + state.question,
                 modifier = Modifier
-                    .background(SuperLightGreen)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = state.question,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(2f),
-                    style = typography.h6
-                )
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically)
-                        .padding(8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Autorenew,
-                        modifier = Modifier
-                            .align(Alignment.End)
-                            .clickable(
-                                indication = rememberRipple(bounded = false),
-                                interactionSource = remember { MutableInteractionSource() },
-                                onClick = {
-                                    viewModel.onToggleClick()
-                                }
-                            ),
-                        contentDescription = "Change Question Icon"
-                    )
-                    Text(
-                        text = "Switch Q",
-                        style = typography.caption,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End
-                    )
-                }
-            }
-
-            Surface(
+                    .weight(11f),
+                color = Green
+            )
+            Icon(
+                imageVector = Icons.Default.Autorenew,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.9f)
-                    .padding(top = 8.dp),
-                shape = RoundedCornerShape(4.dp),
-                color = Color.White,
-                border = BorderStroke(
-                    width = 4.dp,
-                    brush = Brush.linearGradient(listOf(Cyan, Teal, Green, LightGreen))
-                )
-            ) {
-                BasicTextField(
-                    value = state.thought,
-                    onValueChange = {
-                        viewModel.onTextFieldChange(it)
-                    },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    readOnly = readOnly.value,
-                    textStyle = typography.body1,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Default
+                    .align(Alignment.CenterVertically)
+                    .weight(1f)
+                    .clickable(
+                        indication = rememberRipple(bounded = false),
+                        interactionSource = remember { MutableInteractionSource() },
+                        onClick = {
+                            viewModel.onToggleClick()
+                        }
                     ),
-                    cursorBrush = SolidColor(Green)
-                )
-            }
+                contentDescription = "Change Question Icon",
+                tint = Green
+            )
         }
 
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-        ) {
+        Row(modifier = Modifier.fillMaxWidth().padding(8.dp), horizontalArrangement = Arrangement.End) {
             FloatingActionButton(
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier.padding(4.dp),
                 shape = RoundedCornerShape(8.dp),
                 backgroundColor = SuperLightGreen,
                 onClick = {
-                    readOnly.value = true
+                    keyboardController?.hide()
+                    viewModel.onSaveClick()
                 }
             ) {
                 Column(
@@ -158,12 +104,12 @@ fun QuestionnaireScreen(
                 }
             }
             FloatingActionButton(
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier.padding(4.dp),
                 shape = RoundedCornerShape(8.dp),
                 backgroundColor = SuperLightGreen,
                 onClick = {
-                    readOnly.value = false
+                    viewModel.onEditClick()
+                    keyboardController?.show()
                 }
             ) {
                 Column(
@@ -176,6 +122,41 @@ fun QuestionnaireScreen(
                     Text(text = "Edit")
                 }
             }
+            FloatingActionButton(
+                modifier = Modifier.padding(4.dp),
+                shape = RoundedCornerShape(4.dp),
+                backgroundColor = SuperLightGreen,
+                onClick = {
+                    viewModel.onClearClick()
+                }
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = "Clear Icon"
+                    )
+                    Text(text = "Clear")
+                }
+            }
         }
+
+        OutlinedTextField(
+            value = state.thought,
+            onValueChange = {
+                viewModel.onTextFieldChange(it)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .fillMaxHeight(0.9f),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Default
+            ),
+            readOnly = state.readOnly,
+            shape = RoundedCornerShape(4.dp)
+        )
     }
 }
