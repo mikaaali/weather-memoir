@@ -3,3 +3,13 @@ CREATE TABLE User(
     firstname TEXT NOT NULL,
     lastname TEXT
 );
+
+getUser:
+SELECT * FROM User
+ORDER BY uid
+DESC
+LIMIT 1;
+
+insertUser:
+INSERT INTO User(uid, firstname, lastname)
+VALUES (?, ?, ?);

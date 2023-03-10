@@ -6,9 +6,21 @@ CREATE TABLE ThoughtEntries(
     question TEXT NOT NULL,
     thought TEXT,
     creationTime INTEGER AS ZonedDateTime NOT NULL,
-    mainWeatherConditionDescription TEXT NOT NULL,
+    mainWeatherConditionIcon TEXT NOT NULL,
+    mainWeatherConditionDescription TEXT  NOT NULL,
 
     FOREIGN KEY(uid)
         REFERENCES User(uid)
         ON DELETE CASCADE
 );
+
+all:
+SELECT * FROM ThoughtEntries;
+
+searchResult:
+SELECT * FROM ThoughtEntries
+WHERE lower(mainWeatherConditionDescription)=?;
+
+insertOrUpdateThoughtEntries:
+INSERT OR REPLACE INTO ThoughtEntries(uid, question, thought, creationTime, mainWeatherConditionIcon, mainWeatherConditionDescription)
+VALUES  (?, ?, ?, ?, ?, ?);
