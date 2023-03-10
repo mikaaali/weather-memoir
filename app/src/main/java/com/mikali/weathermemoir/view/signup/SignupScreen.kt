@@ -188,6 +188,7 @@ fun SignupScreen(
                 // Create Account Button
                 Button(
                     onClick = {
+                        keyboardController?.hide()
                         if (state.firstName.isBlank() || state.email.isBlank() || state.password.isBlank()) {
                             isError.value = true
                         } else {
