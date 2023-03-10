@@ -10,8 +10,11 @@ class ModuleTest : KoinTest {
 
     @Test
     fun `Check if definition can run for each module`() {
+        /* appModule can not be initialized because we dependent inject the firebase instance
+        (which requires  FirebaseApp.initializeApp(this) before startKoin
+         */
         startKoin {
-            modules(listOf(networkModule, appModule))
+            modules(listOf(networkModule))
         }.checkModules()
         stopKoin()
     }
