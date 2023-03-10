@@ -10,10 +10,12 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import com.mikali.weathermemoir.viewmodel.MemoirListViewModel
 
 @Composable
 fun BottomBar(
-    bottomNavigationScreens: MutableState<BottomNavigationScreens>
+    bottomNavigationScreens: MutableState<BottomNavigationScreens>,
+    memoirListViewModel: MemoirListViewModel
 ) {
     BottomNavigation() {
         BottomNavigationItem(
@@ -30,7 +32,10 @@ fun BottomBar(
         )
         BottomNavigationItem(
             selected = bottomNavigationScreens.value == BottomNavigationScreens.MEMOIR_LIST,
-            onClick = { bottomNavigationScreens.value = BottomNavigationScreens.MEMOIR_LIST },
+            onClick = {
+                bottomNavigationScreens.value = BottomNavigationScreens.MEMOIR_LIST
+                memoirListViewModel.getThoughtEntries()
+            },
             icon = { Icon(imageVector = Icons.Default.List, contentDescription = "List Icon") },
             label = { Text(text = "Memoir List") }
         )

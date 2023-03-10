@@ -10,6 +10,8 @@ import com.mikali.weathermemoir.view.signup.SignupScreen
 import com.mikali.weathermemoir.view.splash.SplashScreen
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
 import com.mikali.weathermemoir.viewmodel.LoginViewModel
+import com.mikali.weathermemoir.viewmodel.MainViewModel
+import com.mikali.weathermemoir.viewmodel.MemoirListViewModel
 import com.mikali.weathermemoir.viewmodel.QuestionnaireViewModel
 import com.mikali.weathermemoir.viewmodel.SignupViewModel
 
@@ -18,7 +20,9 @@ fun Navigation(
     loginViewModel: LoginViewModel,
     signupViewModel: SignupViewModel,
     homeViewModel: HomeViewModel,
-    questionnaireViewModel: QuestionnaireViewModel
+    questionnaireViewModel: QuestionnaireViewModel,
+    memoirListViewModel: MemoirListViewModel,
+    mainViewModel: MainViewModel
 ) {
     val navController = rememberNavController()
 
@@ -43,6 +47,8 @@ fun Navigation(
             MainScreen(
                 homeViewModel = homeViewModel,
                 questionnaireViewModel = questionnaireViewModel,
+                memoirListViewModel = memoirListViewModel,
+                mainViewModel = mainViewModel,
                 navController = navController
             )
         }

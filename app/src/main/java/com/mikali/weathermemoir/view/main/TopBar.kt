@@ -13,14 +13,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.mikali.weathermemoir.navigation.NavigationScreens
+import com.mikali.weathermemoir.viewmodel.MainViewModel
 
 @Composable
-fun TopBar(navController: NavController) {
+fun TopBar(
+    navController: NavController,
+    mainViewModel: MainViewModel
+) {
     TopAppBar(
         title = { Text(text = "WeatherMemoir") },
         actions = {
             IconButton(
                 onClick = {
+                    mainViewModel.onLogoutClick()
                     FirebaseAuth.getInstance().signOut().run {
                         navController.navigate(NavigationScreens.LOGIN.name)
                     }
