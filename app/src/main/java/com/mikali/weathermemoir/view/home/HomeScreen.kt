@@ -17,17 +17,15 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rxjava2.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.mikali.weathermemoir.view.theme.SuperLightGreen
 import com.mikali.weathermemoir.viewmodel.HomeViewModel
 
@@ -36,7 +34,7 @@ import com.mikali.weathermemoir.viewmodel.HomeViewModel
 fun HomeScreen(
     viewModel: HomeViewModel
 ) {
-    val state = viewModel.weatherObservable.subscribeAsState(initial = null).value
+    val state = viewModel.homeObservable.subscribeAsState(initial = null).value
     val loadingState = viewModel.loadingObservable.subscribeAsState(initial = null).value
 
     if (loadingState == true) {
@@ -55,10 +53,11 @@ fun HomeScreen(
         }
     } else {
         BackdropScaffold(
+            frontLayerScrimColor = Color.Unspecified,
             appBar = { /*No Operation*/ },
             backLayerContent = {
                 if (state != null) {
-                    HomeBackLayerContent(state)
+                    HomeBackLayerContent(state.weather)
                 }
             },
             frontLayerContent = {
@@ -70,41 +69,43 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .padding(8.dp)
                     )
-
-                    Row(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(SuperLightGreen)
-                            .clickable { }
-                    ) {
-                        Image(
-                            imageVector = Icons.Outlined.WbSunny,
-                            contentScale = ContentScale.Crop,
-                            contentDescription = null,
+                    if (state != null) {
+                        Row(
                             modifier = Modifier
                                 .padding(8.dp)
-                                .size(60.dp)
-                                .align(Alignment.Top)
-                        )
-                        Column(modifier = Modifier.padding(8.dp)) {
-                            Text(
-                                text = "What is your earliest memory?",
-                                style = typography.subtitle1,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(SuperLightGreen)
+                                .clickable { }
+                        ) {
+                            Image(
+                                painter = rememberAsyncImagePainter(
+                                    model = "https://openweathermap.org/img/wn/${state.memoir.mainWeatherConditionIcon}.png"
+                                ),
+                                contentDescription = "Weather Icon",
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(60.dp)
+                                    .align(Alignment.Top)
                             )
-                            Text(
-                                text = "Feb 8, 2023",
-                                style = typography.subtitle2,
-                                color = Color.Gray
-                            )
-                            Text(
-                                text = "Today was not a stressful day. Everything was happy. Glad I got started with writing down some of my thoughts",
-                                style = typography.body2,
-                                maxLines = 5,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                            Column(modifier = Modifier.padding(8.dp)) {
+                                Text(
+                                    text = state.memoir.question,
+                                    style = typography.subtitle1,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Text(
+                                    text = state.memoir.creationTime,
+                                    style = typography.subtitle2,
+                                    color = Color.Gray
+                                )
+                                Text(
+                                    text = state.memoir.thought,
+                                    style = typography.body2,
+                                    maxLines = 5,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
                     }
                 }
